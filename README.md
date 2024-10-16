@@ -1,2 +1,2 @@
 # xxd
-xxd basic hex dump
+a very basic xxd implementation
