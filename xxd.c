@@ -6,7 +6,7 @@ int main()
 {    
     setlocale(LC_CTYPE, "");
     wchar_t ch = 0x52;
-    // wprintf(L"%lc\n", ch); // needed to set locale later.
+    // wprintf(L"%lc\n", ch);
 
     int quotient, remainder;
 
