@@ -6,8 +6,8 @@
 
 int main()
 {
-    setlocale(LC_CTYPE, "");
-    wchar_t ch = 0x52; // for later use
+    setlocale(LC_CTYPE, ""); // for later use
+    wchar_t ch = 0x52;
     // wprintf(L"%lc\n", ch);
 
     int quotient, remainder;
@@ -17,23 +17,19 @@ int main()
     char *s_builder = malloc(4 * sizeof(char));
     for (int i = 0; i < sizeof(input) - 2; i = i + 2)
     {
-
         quotient = input[i] / 16;
         remainder = input[i] % 16;
-
         sprintf(s_builder, "%x%x", quotient, remainder);
         printf("%s", s_builder);
 
-        // 4-digit hex code
+        // make 4-digit hex code
         quotient = input[i + 1] / 16;
         remainder = input[i + 1] % 16;
-
         sprintf(s_builder, "%x%x ", quotient, remainder);
         printf("%s", s_builder);
     }
 
     printf("%s", input);
-
     printf("\n");
 
     return 0;
