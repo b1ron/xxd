@@ -1,2 +1,2 @@
 # xxd
-a very basic xxd implementation
+a very basic implementation of the xxd command
