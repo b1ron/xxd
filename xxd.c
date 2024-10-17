@@ -17,20 +17,22 @@ int main()
     char *s_builder = malloc(4 * sizeof(char));
     for (int i = 0; i < sizeof(input) - 2; i = i + 2)
     {
-        // first hex value
+
         quotient = input[i] / 16;
         remainder = input[i] % 16;
 
         sprintf(s_builder, "%x%x", quotient, remainder);
         printf("%s", s_builder);
 
-        // second hex value
+        // 4-digit hex code
         quotient = input[i + 1] / 16;
         remainder = input[i + 1] % 16;
 
         sprintf(s_builder, "%x%x ", quotient, remainder);
         printf("%s", s_builder);
     }
+
+    printf("%s", input);
 
     printf("\n");
 
