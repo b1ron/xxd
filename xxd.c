@@ -10,7 +10,7 @@ int main()
 
     int quotient, remainder;
 
-    char str[] = "http://4pt4axjgz"; // 00000000: 6874 7470 3a2f 2f34 7074 3461 786a 677a
+    char str[] = "https://abcd3434"; // 00000000: 6874 7470 733a 2f2f 6162 6364 3334 3334  https://abcd3434
     int length = sizeof(str);
     for (int i = 0; i < length-1; ++i)
     {
