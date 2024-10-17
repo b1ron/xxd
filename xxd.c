@@ -16,7 +16,15 @@ int main()
     {
         quotient = str[i] / 16;
         remainder = str[i] % 16;
-        printf("%x%x\n", quotient, remainder);
+        printf("%x%x", quotient, remainder);
+    }
+
+    int c;
+
+    c = getchar();
+    while (c != EOF) {
+        putchar(c);
+        c = getchar();
     }
 
     return 0;
