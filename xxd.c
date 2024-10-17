@@ -3,8 +3,6 @@
 #include <locale.h>
 #include <stdlib.h>
 
-// #define MAX_LEN len * 2;
-
 int main()
 {
     setlocale(LC_CTYPE, "");
