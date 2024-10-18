@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// https://linux.die.net/man/1/xxd
+
 int main()
 {
     setlocale(LC_CTYPE, ""); // for later use
@@ -13,6 +15,9 @@ int main()
     int quotient, remainder;
 
     char input[] = "https://abcd3434"; // 00000000: 6874 7470 733a 2f2f 6162 6364 3334 3334  https://abcd3434
+
+    int offset = 0;
+    printf("%08d ", offset);
 
     char *s_builder = malloc(4 * sizeof(char));
     for (int i = 0; i < sizeof(input) - 2; i = i + 2)
@@ -29,8 +34,7 @@ int main()
         printf("%s", s_builder);
     }
 
-    printf("%s", input);
-    printf("\n");
+    printf("%s\n", input);
 
     return 0;
 }
