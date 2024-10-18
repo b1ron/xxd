@@ -3,54 +3,45 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 // https://linux.die.net/man/1/xxd
 
+struct stat st;
+
 int main()
 {
-    setlocale(LC_CTYPE, ""); // for later use
-    wchar_t ch = 0x52;
-    // wprintf(L"%lc\n", ch);
+    setlocale(LC_CTYPE, "");
 
-    // TODO: read filename from stdin
     FILE *fp;
-    fp = fopen("file", "r");
+    fp = fopen("file", "r"); // 00000000: 6874 7470 733a 2f2f 6162 6364 3334 3334  https://abcd3434
     if (fp == NULL)
     {
-        printf("Error opening file\n");
+        printf("No such file\n");
         exit(1);
     }
 
-    // read file
     int c;
-    while ((c = getc(fp)) != EOF)
-    {
-        wprintf(L"%lc", c);
-    }
-
     int quotient, remainder;
-
-    char input[] = "https://abcd3434"; // 00000000: 6874 7470 733a 2f2f 6162 6364 3334 3334  https://abcd3434
-
-    int offset = 0;
-    printf("%08d ", offset);
-
+    stat("file", &st);
+    int sz = st.st_size;
     char *s_builder = malloc(4 * sizeof(char));
-    for (int i = 0; i < sizeof(input) - 2; i = i + 2)
+    int i = 0;
+    while ((c = getc(fp)) != EOF && i < sz - 1)
     {
-        quotient = input[i] / 16;
-        remainder = input[i] % 16;
-        sprintf(s_builder, "%x%x", quotient, remainder);
-        printf("%s", s_builder);
+        s_builder[i] = c / 16;
+        s_builder[i + 1] = c % 16;
 
-        // make 4-digit hex code
-        quotient = input[i + 1] / 16;
-        remainder = input[i + 1] % 16;
-        sprintf(s_builder, "%x%x ", quotient, remainder);
-        printf("%s", s_builder);
+        c = getc(fp);
+
+        s_builder[i + 2] = c / 16;
+        s_builder[i + 3] = c % 16;
+        i = i + 2;
+
+        printf("%x%x%x%x ", s_builder[i - 2], s_builder[i - 1], s_builder[i], s_builder[i + 1]);
     }
-
-    printf("%s\n", input);
+    fclose(fp);
+    printf("\n");
 
     return 0;
 }
