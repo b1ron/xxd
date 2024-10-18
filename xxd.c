@@ -24,10 +24,10 @@ int main()
     int c;
     int quotient, remainder;
 
+    char *s_builder = malloc(4 * sizeof(char));
+
     stat("file", &st);
     int sz = st.st_size;
-
-    char *s_builder = malloc(4 * sizeof(char));
 
     int i = 0;
     while ((c = getc(fp)) != EOF && i < sz - 1)
