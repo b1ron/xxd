@@ -23,9 +23,12 @@ int main()
 
     int c;
     int quotient, remainder;
+
     stat("file", &st);
     int sz = st.st_size;
+
     char *s_builder = malloc(4 * sizeof(char));
+
     int i = 0;
     while ((c = getc(fp)) != EOF && i < sz - 1)
     {
@@ -40,7 +43,9 @@ int main()
 
         printf("%x%x%x%x ", s_builder[i - 2], s_builder[i - 1], s_builder[i], s_builder[i + 1]);
     }
+
     fclose(fp);
+
     printf("\n");
 
     return 0;
