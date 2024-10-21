@@ -21,26 +21,29 @@ int main()
     setlocale(LC_CTYPE, "");
 
     FILE *fp;
-    fp = fopen("file", "r"); // 00000000: 6874 7470 733a 2f2f 6162 6364 3334 3334  https://abcd3434
+    fp = fopen("file", "r");
     if (fp == NULL)
     {
         printf("No such file\n");
         exit(1);
     }
 
-    int quotient, remainder;
-    int c;
-
     stat("file", &st);
     int sz = st.st_size;
+
     int BUF_SIZE = sz * 2;
     char buf[BUF_SIZE][4];
-
     memset(buf, 0, BUF_SIZE * sizeof(char));
 
+    int c;
+    bool first = true;
     char hex[2];
 
-    bool first = true;
+    /*
+    file's first line with default xxd options:
+    00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
+    FIXME: first data column has an extra octet
+     */
 
     int i = -1;
     while ((c = getc(fp)) != EOF && i < sz - 1)
@@ -66,7 +69,6 @@ int main()
     }
 
     fclose(fp);
-
     printf("\n");
 
     return 0;
