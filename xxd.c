@@ -71,8 +71,10 @@ int main()
     {
         if (i > 0 && i % 2 == 0)
         {
-            printf(" "); // add space between octets
+            printf(" ");
         }
+
+        // dump hex characters
         printf("%c%c", buf[i][0], buf[i][1]);
 
         --octets_per_line;
