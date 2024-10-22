@@ -67,7 +67,7 @@ int main()
 
     // the initial line is a newline by definition
     bool newline = True;
-    for (int i = 0; i < sz - 1; i++)
+    for (int i = 0; i < sz - 1; ++i)
     {
         if (i > 0 && i % 2 == 0)
         {
