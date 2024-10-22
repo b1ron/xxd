@@ -32,44 +32,53 @@ int main()
     int sz = st.st_size;
 
     int BUF_SIZE = sz * 2;
-    char buf[BUF_SIZE][4];
+    char buf[BUF_SIZE][2];
     memset(buf, 0, BUF_SIZE * sizeof(char));
-
-    int c;
-    bool first = true;
-    char hex[2];
 
     /*
     file's first line with default xxd options:
     00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
-    FIXME: first data column has an extra octet
+
+    FIXME: remove extraneous whitespace at each line after the first line,
+    and retain prefix NULL hex characters 00 0a45 is a45
      */
 
-    int i = -1;
+    int c;
+    char hex[2];
+
+    int i = 0;
     while ((c = getc(fp)) != EOF && i < sz - 1)
     {
-        if (i % 3 == 0)
-        {
-            buf[i][0] = ' ';
-            printf("%c", buf[i][0]);
-            ++i;
-        }
-        if (first)
-        {
-            first = False;
-            i = 0;
-        }
-
         sprintf(hex, "%x", c);
         buf[i][0] = hex[0];
         buf[i][1] = hex[1];
-        printf("%c%c", buf[i][0], buf[i][1]);
-
-        ++i;
+        i++;
     }
 
     fclose(fp);
-    printf("\n");
+
+    int octets = 8;
+    int octets_not_truncated_count = octets * 2;
+
+    bool is_newline = True;
+    for (int i = 0; i < sz - 1; i++)
+    {
+        if (i > 0 && i % 2 == 0)
+        {
+            printf(" ");
+        }
+        printf("%c%c", buf[i][0], buf[i][1]);
+        --octets_not_truncated_count;
+        if (octets_not_truncated_count - 1 == 0)
+        {
+            is_newline = False;
+        }
+        if (octets_not_truncated_count == 0 && is_newline == False)
+        {
+            octets_not_truncated_count = octets * 2;
+            printf("\n");
+        }
+    }
 
     return 0;
 }
