@@ -42,6 +42,10 @@ int main()
     FIXME: remove extraneous whitespace at each line after the first line,
     and retain prefix NULL hex characters 00, 0a45 is a45, not 0a45
     see output file for examples
+
+    TODO: add options to xxd, such as -c, -g, -l, -s, -u, -v (maybe)
+    TODO: add the file offset at the beginning of each line
+    TODO: add the ASCII representation of the hex characters
      */
 
     int c;
@@ -59,24 +63,27 @@ int main()
     fclose(fp);
 
     int octets = 8;
-    int octets_not_truncated_count = octets * 2;
+    int octets_per_line = octets * 2;
 
-    bool is_newline = True;
+    // the initial line is a newline by definition
+    bool newline = True;
     for (int i = 0; i < sz - 1; i++)
     {
         if (i > 0 && i % 2 == 0)
         {
-            printf(" ");
+            printf(" "); // add space between octets
         }
         printf("%c%c", buf[i][0], buf[i][1]);
-        --octets_not_truncated_count;
-        if (octets_not_truncated_count - 1 == 0)
+
+        --octets_per_line;
+        if (octets_per_line - 1 == 0)
         {
-            is_newline = False;
+            newline = False;
         }
-        if (octets_not_truncated_count == 0 && is_newline == False)
+
+        if (octets_per_line == 0 && newline == False)
         {
-            octets_not_truncated_count = octets * 2;
+            octets_per_line = octets * 2;
             printf("\n");
         }
     }
