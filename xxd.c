@@ -40,7 +40,8 @@ int main()
     00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
 
     FIXME: remove extraneous whitespace at each line after the first line,
-    and retain prefix NULL hex characters 00 0a45 is a45
+    and retain prefix NULL hex characters 00, 0a45 is a45, not 0a45
+    see output file for examples
      */
 
     int c;
