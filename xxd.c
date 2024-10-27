@@ -39,8 +39,7 @@ int main()
     file's first line with default xxd options:
     00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
 
-    FIXME: remove extraneous whitespace at each line after the first line,
-    and retain prefix NULL hex characters 00, 0a45 is a45, not 0a45
+    FIXME: retain prefix NULL hex characters 00, 0a45 is a45, not 0a45
     see output file for examples
 
     TODO: add options to xxd, such as -c, -g, -l, -s, -u, -v (maybe)
@@ -52,12 +51,12 @@ int main()
     char hex[2];
 
     int i = 0;
-    while ((c = getc(fp)) != EOF && i < sz - 1)
+    while ((c = getc(fp)) != EOF && i < sz)
     {
         sprintf(hex, "%x", c);
         buf[i][0] = hex[0];
         buf[i][1] = hex[1];
-        i++;
+        ++i;
     }
 
     fclose(fp);
@@ -67,18 +66,18 @@ int main()
 
     // the initial line is a newline by definition
     bool newline = True;
-    for (int i = 0; i < sz - 1; ++i)
+    for (int i = 0; i < sz; ++i)
     {
+        // dump hex characters
+        printf("%c%c", buf[i][0], buf[i][1]);
+
         if (i > 0 && i % 2 == 0)
         {
             printf(" ");
         }
 
-        // dump hex characters
-        printf("%c%c", buf[i][0], buf[i][1]);
-
         --octets_per_line;
-        if (octets_per_line - 1 == 0)
+        if (octets_per_line == 0)
         {
             newline = False;
         }
