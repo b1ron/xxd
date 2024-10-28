@@ -24,16 +24,14 @@ int main()
     stat("file", &st);
     int sz = st.st_size;
 
-    int BUF_SIZE = sz * 2;
+    int BUF_SIZE = sz;
     char buf[BUF_SIZE][2];
     memset(buf, 0, BUF_SIZE * sizeof(char));
 
     /*
     file's first line with default xxd options:
     00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
-
-    FIXME: retain prefix NULL hex characters 00, 0a45 is a45, not 0a45
-    see output file for examples
+    FIXME: avoid reading garbage values into destination buffer
 
     TODO: add options to xxd, such as -c, -g, -l, -s, -u, -v (maybe)
     TODO: add the file offset at the beginning of each line
@@ -41,14 +39,10 @@ int main()
      */
 
     int c;
-    char hex[2];
-
     int i = 0;
     while ((c = getc(fp)) != EOF && i < sz)
     {
-        sprintf(hex, "%x", c);
-        buf[i][0] = hex[0];
-        buf[i][1] = hex[1];
+        sprintf(buf[i], "%02x", c);
         ++i;
     }
 
@@ -56,7 +50,7 @@ int main()
 
     char tmp[4];
     c = 0;
-    for (int i = 0; i < sz - 2; i = i + 2)
+    for (int i = 0; i < sz; i = i + 2)
     {
         ++c;
 
