@@ -31,7 +31,6 @@ int main()
     /*
     file's first line with default xxd options:
     00000000: 4c6f 7265 6d20 6970 7375 6d20 646f 6c6f  Lorem ipsum dolo
-    FIXME: avoid reading garbage values into destination buffer
 
     TODO: add options to xxd, such as -c, -g, -l, -s, -u, -v (maybe)
     TODO: add the file offset at the beginning of each line
@@ -45,19 +44,25 @@ int main()
         sprintf(buf[i], "%02x", c);
         ++i;
     }
-
     fclose(fp);
 
     char tmp[4];
     c = 0;
     for (int i = 0; i < sz; i = i + 2)
     {
-        ++c;
-
         tmp[0] = buf[i][0];
         tmp[1] = buf[i][1];
         tmp[2] = buf[i + 1][0];
         tmp[3] = buf[i + 1][1];
+
+        ++c;
+        // FIXME: wtf is happening here?
+        // indicates that there's a nibble left not a full byte
+        if ((c == sz / 2) - 1)
+        {
+            printf("%c%c\n", tmp[0], tmp[1]);
+            continue;
+        }
         printf("%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
         printf(" ");
         if (c % 8 == 0)
