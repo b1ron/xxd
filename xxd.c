@@ -57,7 +57,7 @@ int main()
 
         // indicates that there's a nibble left not a full byte, i.e. we've reached EOF
         ++c;
-        if (c > ((sz / 2)))
+        if (c > (sz / 2))
         {
             printf("%c%c\n", tmp[0], tmp[1]);
             continue;
