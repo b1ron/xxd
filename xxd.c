@@ -7,13 +7,6 @@
 
 // https://linux.die.net/man/1/xxd
 
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
-
-static const bool False = 0;
-static const bool True = 1;
-
 struct stat st;
 
 int main()
@@ -61,30 +54,20 @@ int main()
 
     fclose(fp);
 
-    int octets = 8;
-    int octets_per_line = octets * 2;
-
-    // the initial line is a newline by definition
-    bool newline = True;
-    for (int i = 0; i < sz; ++i)
+    char tmp[4];
+    c = 0;
+    for (int i = 0; i < sz - 2; i = i + 2)
     {
-        // dump hex characters
-        printf("%c%c", buf[i][0], buf[i][1]);
+        ++c;
 
-        if (i > 0 && i % 2 == 0)
+        tmp[0] = buf[i][0];
+        tmp[1] = buf[i][1];
+        tmp[2] = buf[i + 1][0];
+        tmp[3] = buf[i + 1][1];
+        printf("%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
+        printf(" ");
+        if (c % 8 == 0)
         {
-            printf(" ");
-        }
-
-        --octets_per_line;
-        if (octets_per_line == 0)
-        {
-            newline = False;
-        }
-
-        if (octets_per_line == 0 && newline == False)
-        {
-            octets_per_line = octets * 2;
             printf("\n");
         }
     }
