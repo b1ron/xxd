@@ -55,12 +55,12 @@ int main()
         tmp[2] = buf[i + 1][0];
         tmp[3] = buf[i + 1][1];
 
-        ++c;
         // indicates that there's a nibble left not a full byte, i.e. we've reached EOF
-        // FIXME: wtf is happening here?
-        if ((c == sz / 2) - 1)
+        ++c;
+        if (c > ((sz / 2)))
         {
             printf("%c%c\n", tmp[0], tmp[1]);
+            continue;
         }
         printf("%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
         printf(" ");
