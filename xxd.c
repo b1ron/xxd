@@ -60,7 +60,7 @@ int main()
         if (c > (sz / 2))
         {
             printf("%c%c\n", tmp[0], tmp[1]);
-            continue;
+            return 0;
         }
         printf("%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
         printf(" ");
