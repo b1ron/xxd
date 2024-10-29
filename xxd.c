@@ -42,10 +42,11 @@ int main()
     while ((c = getc(fp)) != EOF && i < sz)
     {
         sprintf(buf[i], "%02x", c);
-        ++i;
+        i++;
     }
     fclose(fp);
 
+    int needs_newline = 1;
     char tmp[4];
     c = 0;
     for (int i = 0; i < sz; i = i + 2)
@@ -55,19 +56,33 @@ int main()
         tmp[2] = buf[i + 1][0];
         tmp[3] = buf[i + 1][1];
 
+        c++;
         // indicates that there's a nibble left not a full byte, i.e. we've reached EOF
-        ++c;
         if (c > (sz / 2))
         {
+            tmp[2] = '0';
+            tmp[3] = '0';
             printf("%c%c\n", tmp[0], tmp[1]);
             return 0;
         }
+
         printf("%c%c%c%c", tmp[0], tmp[1], tmp[2], tmp[3]);
         printf(" ");
+
         if (c % 8 == 0)
         {
             printf("\n");
         }
+
+        if (c == sz / 2)
+        {
+            needs_newline = 0;
+        }
+    }
+
+    if (needs_newline)
+    {
+        printf("\n");
     }
 
     return 0;
